@@ -20,6 +20,7 @@
 
     # Yeni Dotfiles Sistemi için Özel Komut
     nixos-update = "sudo nixos-rebuild switch -I nixos-config=$HOME/.dotfiles/nixos/configuration.nix";
+    nixos-update-upgrade = "sudo nixos-rebuild switch --upgrade -I nixos-config=$HOME/.dotfiles/nixos/configuration.nix";
     clean = "sudo nix-collect-garbage -d"; 
     # Git Kısaltmaları
     g = "git";
