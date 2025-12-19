@@ -9,6 +9,7 @@
     kitty
 #    thunderbird
     mailspring
+    
   ];
 
 
