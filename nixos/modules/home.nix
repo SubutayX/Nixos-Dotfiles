@@ -16,7 +16,7 @@
     #btop
     fastfetch
     kitty
-    rofi 
+     
   ];
 
   home.stateVersion = "24.11"; 
