@@ -3,7 +3,7 @@
 {
   # Hem Bash hem Zsh hem de diğer shell'lerde geçerli olacak alias'lar
   environment.shellAliases = {
-    sshEtu = "ssh root@10.0.10.194"
+    sshEtu = "ssh root@10.0.10.194";
     # Temel Komutlar
     #ll = "ls -lh";             # Detaylı ve okunabilir liste
     grep = "grep --color=auto";
