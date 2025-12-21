@@ -3,9 +3,15 @@
 
 {
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false; #ture
   boot.loader.efi.canTouchEfiVariables = true;
-
+#####
+  boot.loader.grub.enable = true;           # GRUB'u açıyoruz
+  boot.loader.grub.devices = [ "nodev" ];   # UEFI için gerekli
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.configurationLimit = 5;
+####
   # Ağ ayarları
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -27,7 +33,7 @@
   '';
   
   # Boot Yöneticisi için limit koymak (Menüyü temiz tutar)
-  boot.loader.systemd-boot.configurationLimit = 5;
+  #boot.loader.systemd-boot.configurationLimit = 5; açılacak
 
 
 

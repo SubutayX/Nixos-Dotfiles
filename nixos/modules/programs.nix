@@ -10,7 +10,7 @@
 #    thunderbird
     mailspring
     postman
-    
+    spotify
   ];
 
 

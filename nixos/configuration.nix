@@ -34,6 +34,18 @@
   boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
   hardware.bluetooth.powerOnBoot = true; 
   services.blueman.enable = true;
+
+  #kde connect
+  programs.kdeconnect.enable = true;
+  networking.firewall = {
+  enable = true;
+  allowedTCPPortRanges = [ 
+    { from = 1714; to = 1764; } 
+  ];
+  allowedUDPPortRanges = [ 
+    { from = 1714; to = 1764; } 
+  ];
+};
   
   programs.zsh = {
     enable = true;
