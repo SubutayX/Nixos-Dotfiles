@@ -10,7 +10,11 @@
 #    thunderbird
     mailspring
     postman
+    bruno
+#    insomnia
+    libreoffice-fresh
     spotify
+    jetbrains.rust-rover
   ];
 
 
