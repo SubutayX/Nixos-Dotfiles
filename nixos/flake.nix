@@ -1,11 +1,14 @@
 {
-  description = "NixOS flake configuration for nixos host";
+  description = "NixOS flake configuration (unstable)";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # GitHub API commit endpoint yerine tarball kullanır
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
