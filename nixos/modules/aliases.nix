@@ -18,10 +18,15 @@
     nrb = "sudo nixos-rebuild boot";
     nss = "nix-shell -p";
 
-    # Yeni Dotfiles Sistemi için Özel Komut
-    nixos-update = "sudo nixos-rebuild switch -I nixos-config=$HOME/.dotfiles/nixos/configuration.nix";
-    nixos-update-upgrade = "sudo nixos-rebuild switch --upgrade -I nixos-config=$HOME/.dotfiles/nixos/configuration.nix";
-    clean = "sudo nix-collect-garbage -d"; 
+    # Günlük kullanım: sistem yapılandırmasını uygula
+    nixos-switch="sudo nixos-rebuild switch --flake $HOME/.dotfiles/nixos#nixos";
+
+# Sistem güncelleme: flake'i güncelle ve uygula
+    nixos-update="nix flake update $HOME/.dotfiles/nixos && sudo nixos-rebuild switch --flake $HOME/.dotfiles/nixos#nixos";
+
+# Temizlik: kullanılmayan paketleri ve geçmişi sil
+    nixos-clean="sudo nix-collect-garbage -d";
+
     # Git Kısaltmaları
     g = "git";
     gs = "git status";

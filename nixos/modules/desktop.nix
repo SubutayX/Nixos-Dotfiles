@@ -8,8 +8,18 @@
 
   # X11 ve Masaüstü ortamı ayarları
   services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
+ # services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+services.displayManager.sddm = {
+  enable = true;
+  settings = {
+    General = {
+      Numlock = "on";
+    };
+  };
+};
+
 
   # Klavye ve Yerel ayarlar
   services.xserver.xkb = {
