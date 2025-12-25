@@ -17,6 +17,7 @@
     ./modules/postgresql.nix
     ./modules/starship.nix
     # ./modules/hyprland.nix
+     ./modules/nix-parallel-downloads.nix
   ];
 
   ## Flake + Nix command

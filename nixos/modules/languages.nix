@@ -36,5 +36,9 @@
     # ----------------
     jdk17
     gcc
+    
+    # python
+     python312
+     python312Packages.pip
   ];
 }

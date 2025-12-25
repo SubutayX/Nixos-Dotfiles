@@ -14,7 +14,7 @@
 #    insomnia
     libreoffice-fresh
     spotify
-    jetbrains.rust-rover
+    #jetbrains.rust-rover
   ];
 
 
