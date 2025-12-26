@@ -10,19 +10,20 @@
     "sentinel_db"
     "sentinel_test"
   ];
+  
+ensureUsers = [
+  {
+    name = "sentinel";
+    ensureDBOwnership = true;
+    attributes = {
+      login = true;
+      superuser = true;
+      createdb = true;
+      createrole = true;
+    };
+  }
+];
 
-  ensureUsers = [
-    {
-      name = "sentinel";
-      ensureDBOwnership = true;
-      attributes = {
-        login = true;
-        superuser = false;
-        createdb = false;
-        createrole = false;
-      };
-    }
-  ];
 
   authentication = pkgs.lib.mkForce ''
     local   all   sentinel            trust
