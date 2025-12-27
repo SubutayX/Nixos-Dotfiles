@@ -18,6 +18,7 @@
     ./modules/starship.nix
     # ./modules/hyprland.nix
      ./modules/nix-parallel-downloads.nix
+     ./modules/promt.nix
   ];
 
   ## Flake + Nix command
