@@ -4,6 +4,7 @@
 {
     nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+
     dbeaver-bin 
     google-chrome
     kitty
@@ -15,6 +16,7 @@
     libreoffice-fresh
     spotify
     #jetbrains.rust-rover
+    wezterm
   ];
 
 

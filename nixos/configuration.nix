@@ -19,8 +19,8 @@
     # ./modules/hyprland.nix
      ./modules/nix-parallel-downloads.nix
     # ./modules/promt.nix
+    ./modules/openvpn.nix
   ];
-
   ## Flake + Nix command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
