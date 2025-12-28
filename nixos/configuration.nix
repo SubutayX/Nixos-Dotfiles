@@ -21,6 +21,7 @@
     ./modules/nix-parallel-downloads.nix
 
     # === Hyprland (system-level) ===
+      ./modules/hyprland.nix
   
   ];
 

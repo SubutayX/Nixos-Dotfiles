@@ -1,31 +1,22 @@
 { config, pkgs, ... }:
 
 {
-  services.xserver.enable = true;
-
-  programs.hyprland = {
+  # Home Manager tarafında Hyprland yapılandırması
+  wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
+    systemd.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-hyprland
-    ];
+  # Kullanıcıya Özel Ortam Değişkenleri
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    QT_QPA_PLATFORM = "wayland";
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
+  # Config dosyasını bağlama
+  xdg.configFile."hypr/hyprland.conf" = {
+    source = ./hyprland.conf;
   };
-
- home.sessionVariables = {
-  NIXOS_OZONE_WL = "1";
-  WLR_NO_HARDWARE_CURSORS = "1";
-};
-
- xdg.configFile."hypr/hyprland.conf" = {
-  source = ./hyprland.conf;
-};
 }
