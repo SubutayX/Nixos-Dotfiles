@@ -17,6 +17,8 @@
     spotify
     #jetbrains.rust-rover
     wezterm
+
+    openvpn
   ];
 
 

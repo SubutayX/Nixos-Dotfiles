@@ -20,12 +20,12 @@
     wayland.enable = true;
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-  };
+ home.sessionVariables = {
+  NIXOS_OZONE_WL = "1";
+  WLR_NO_HARDWARE_CURSORS = "1";
+};
 
-  # 👇 LINKLEME TAM OLARAK BURADA
-  environment.etc."hypr/hyprland.conf".source =
-    ./hyprland.conf;
+ xdg.configFile."hypr/hyprland.conf" = {
+  source = ./hyprland.conf;
+};
 }

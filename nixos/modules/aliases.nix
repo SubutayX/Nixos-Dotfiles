@@ -23,6 +23,9 @@
     # Temizlik
     nixos-clean = "sudo nix-collect-garbage -d";
 
+     etuvpn = "sudo openvpn --config /etc/openvpn/etu.ovpn --auth-user-pass /etc/openvpn/etu.creds --auth-nocache";
+  
+
     # Git
     g  = "git";
     gs = "git status";

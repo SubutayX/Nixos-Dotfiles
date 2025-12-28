@@ -10,8 +10,7 @@
     open = false;
     nvidiaSettings = true;
   };
-
-  environment.sessionVariables = {
+ home.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
   };
 }
