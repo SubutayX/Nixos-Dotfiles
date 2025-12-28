@@ -4,12 +4,10 @@
 {
     nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-
     dbeaver-bin 
     google-chrome
     kitty
-#    thunderbird
-    mailspring
+
     postman
     bruno
 #    insomnia
@@ -17,8 +15,6 @@
     spotify
     #jetbrains.rust-rover
     wezterm
-
-    openvpn
   ];
 
 

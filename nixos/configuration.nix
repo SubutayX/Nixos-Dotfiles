@@ -4,54 +4,37 @@
   imports = [
     ./hardware-configuration.nix
 
-    # === Core system ===
     ./modules/system.nix
     ./modules/users.nix
     ./modules/desktop.nix
 
-    # === Development ===
+    # geliştirme
     ./modules/ide.nix
     ./modules/languages.nix
     ./modules/programs.nix
 
-    # === Services ===
     ./modules/nvidia.nix
     ./modules/postgresql.nix
     ./modules/starship.nix
-    ./modules/nix-parallel-downloads.nix
-
-    # === Hyprland (system-level) ===
-      ./modules/hyprland.nix
-  
+    # ./modules/hyprland.nix
+     ./modules/nix-parallel-downloads.nix
   ];
 
-  # =====================================================
-  # Nix / Flakes
-  # =====================================================
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  ## Flake + Nix command
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # =====================================================
-  # Home Manager (USER SCOPE – DOĞRU YER)
-  # =====================================================
+  ## Home Manager (DOĞRU YER)
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  #home-manager.users.sentinel = import ./home/sentinel/home.nix;
+  home-manager.users.sentinel = import ./modules/home.nix;
 
-
-  # =====================================================
-  # Bluetooth
-  # =====================================================
+  ## Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
   services.blueman.enable = true;
 
-  # =====================================================
-  # KDE Connect
-  # =====================================================
+  ## KDE Connect
   programs.kdeconnect.enable = true;
   networking.firewall = {
     enable = true;
@@ -63,9 +46,7 @@
     ];
   };
 
-  # =====================================================
-  # ZSH (system-level shell)
-  # =====================================================
+  ## ZSH (sistem seviyesi)
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -73,8 +54,5 @@
     syntaxHighlighting.enable = true;
   };
 
-  # =====================================================
-  # System version
-  # =====================================================
   system.stateVersion = "25.11";
 }

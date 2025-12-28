@@ -3,45 +3,46 @@
 {
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_18;
-
-    ensureDatabases = [
-      "sentinel"
-      "sentinel_db"
-      "sentinel_test"
-    ];
+    package = pkgs.lib.mkForce pkgs.postgresql_18;
 
     ensureUsers = [
       {
         name = "sentinel";
         ensureDBOwnership = true;
+        ensureClauses = {
+          superuser = true;
+          createdb = true;
+          createrole = true;
+          login = true;
+          replication = true;
+          bypassrls = true;
+        };
       }
     ];
 
-    authentication = pkgs.lib.mkForce ''
-  # Local connections
-  local   all             postgres                                trust
-  local   all             sentinel                                trust
+    ensureDatabases = [
+      "sentinel"
+      "DB_Forum"
+      "DB_Forum_test"
+    ];
 
-  # IPv4 local connections
-  host    all             postgres        127.0.0.1/32            scram-sha-256
-  host    all             sentinel        127.0.0.1/32            scram-sha-256
+    # GÜNCELLENEN KISIM:
+    # 'trust' -> Şifre sormaz (Güvensiz ama kolay)
+    # 'scram-sha-256' -> Şifre sorar (Güvenli)
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  address       auth-method
+      
+      # "local" bağlantılar (terminalden psql yazınca) genelde peer veya trust kalabilir
+      # ama şifre sorsun istiyorsanız burayı da scram-sha-256 yapabilirsiniz.
+      local all       all                   trust
 
-  # IPv6 local connections
-  host    all             postgres        ::1/128                 scram-sha-256
-  host    all             sentinel        ::1/128                 scram-sha-256
-'';
-
- # ⬇️ YETKİLER BURADA VERİLİR (DOĞRU YER)
-    initialScript = pkgs.writeText "init.sql" ''
-      ALTER ROLE sentinel WITH
-        SUPERUSER
-        CREATEDB
-        CREATEROLE;
+      # TCP/IP bağlantıları (DBeaver, TablePlus, Kodunuz vb.) için ŞİFRE ZORUNLU OLSUN:
+      host  all       all     127.0.0.1/32  scram-sha-256
+      host  all       all     ::1/128       scram-sha-256
     '';
   };
 
-
-   
+  environment.systemPackages = with pkgs; [
+    postgresql_18
+  ];
 }
- 

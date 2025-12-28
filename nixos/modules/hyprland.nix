@@ -1,24 +1,27 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  # 1. Hyprland'i Sistem Genelinde Etkinleştir
-  programs.hyprland.enable = true;
-
-  # 2. XServer ve SDDM (Giriş Ekranı) Ayarları
-  services.xserver.enable = true;
-  
-  services.displayManager.sddm = {
+  # Hyprland'i aktif et
+  programs.hyprland = {
     enable = true;
-    wayland.enable = true;
-    # Tema ayarlarınız varsa buraya ekleyebilirsiniz
+    # Ekran paylaşımı vb. için XWayland desteği
+    xwayland.enable = true;
   };
 
-  # 3. XDG Portal (Ekran paylaşımı ve pencereler arası iletişim için şart)
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  # Hyprland için gerekli çevresel değişkenler
+  environment.sessionVariables = {
+    # Eğer NVIDIA ekran kartınız varsa bunu eklemelisiniz:
+    # WLR_NO_HARDWARE_CURSORS = "1";
+    NIXOS_OZONE_WL = "1"; # Electron uygulamalarının (Discord, VSCode) Wayland'de düzgün çalışması için
   };
-  
-  # Güvenlik için (Hyprland kilit ekranı vb. için gerekli olabilir)
-  security.pam.services.sddm.enableGnomeKeyring = true;
+
+  # Hyprland için yardımcı araçlar
+  environment.systemPackages = with pkgs; [
+    waybar           # Durum çubuğu
+    dunst            # Bildirim sistemi
+    libnotify        # Bildirim kütüphanesi
+    swww             # Duvar kağıdı aracı
+#    kitty            # Terminal (Hyprland varsayılanı)
+    rofi     # Uygulama başlatıcı
+  ];
 }
