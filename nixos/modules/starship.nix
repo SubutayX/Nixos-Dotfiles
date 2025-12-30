@@ -33,7 +33,7 @@
         show_always = true; # Her zaman göster (root olmasan bile)
         style_user = "bold yellow";
         style_root = "bold red";
-        format = "[🇹🇷 $user]($style)";
+        format = "[🇹🇷🇹🇷🇹🇷 $user]($style)";
       };
 
       # Bilgisayar Adı (Hostname)
@@ -41,7 +41,7 @@
         ssh_only = false; # SSH olmasa da göster
         style = "bold yellow";
         # Kullanıcı adıyla bitişik görünmesi için başında @ var
-        format = "[@$hostname]($style) 🇹🇷"; 
+        format = "[@$hostname]($style) 🇹🇷🇹🇷🇹🇷"; 
       };
 
       # Dosya Yolu (Dizin)
