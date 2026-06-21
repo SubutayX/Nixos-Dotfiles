@@ -28,10 +28,21 @@
   home-manager.users.sentinel = import ./modules/home.nix;
 
   ## Bluetooth
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
-  services.blueman.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;  # Sistem açılışında Bluetooth'u otomatik aç
+    settings = {
+      Policy = {
+        AutoEnable = true;
+      };
+    };
+  };
+  # btusb modülü için autosuspend'i kapat (bağlantı kopması sorununu önler)
+  # NOT: boot.kernelParams değil, boot.extraModprobeConfig ile yapılmalı
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=0
+  '';
+  services.blueman.enable = true;  # Bluetooth yöneticisi (KDE bluedevil ile birlikte çalışır)
 
   ## KDE Connect
   programs.kdeconnect.enable = true;

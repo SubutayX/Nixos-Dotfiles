@@ -1,34 +1,55 @@
+# nixos/modules/nvidia.nix
+# NVIDIA RTX 4050 (Ada Lovelace — sm_89) için optimize edilmiş yapılandırma
 { config, lib, pkgs, ... }:
 
 {
-  # Kapalı kaynak sürücülere izin ver
-  nixpkgs.config.allowUnfree = true;
-
-  # Grafik sürücülerini etkinleştir
+  # ── Donanım hızlandırma (32-bit oyun/uygulama desteği dahil) ──────
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
+    enable32Bit = true;  # Steam ve Wine için gerekli
   };
 
-  # X11 ve Wayland için NVIDIA sürücüsünü yükle
-  services.xserver.videoDrivers = ["nvidia"];
+  # ── NVIDIA sürücüsünü X11 ve Wayland için etkinleştir ─────────────
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    # Modsetting gereklidir
+    # Modesetting: Wayland ve modern X11 için zorunlu
     modesetting.enable = true;
 
-    # Güç yönetimi (opsiyonel, uyku modunda sorun yaşarsanız açın)
-    powerManagement.enable = false;
+    # Açık kaynak kernel modülü:
+    # RTX 40 serisi (Ada Lovelace) için sürücü 560+ ile "open = true" ÖNERİLİR.
+    # Sorun yaşarsan false yap.
+    open = true;
+
+    # Güç yönetimi: Suspend/resume kararlılığı için aktif et
+    powerManagement.enable = true;
+    # Fine-grained: Sadece Optimus (hibrit) laptop kurulumlarında gerekli
     powerManagement.finegrained = false;
 
-    # Açık kaynak kernel modülünü kullanma (RTX 20 serisi ve sonrası için önerilir)
-    # Eğer eski bir kartınız varsa bunu false yapın
-    open = false;
-
-    # NVIDIA ayarlar panelini etkinleştirir (nvidia-settings)
+    # nvidia-settings GUI paneli
     nvidiaSettings = true;
 
-    # Kullanılacak sürücü paketini seçin (genelde stable en iyisidir)
+    # Sürücü: stable (RTX 40 serisi için önerilen)
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  # ── Wayland + NVIDIA ortam değişkenleri ───────────────────────────
+  environment.sessionVariables = {
+    # NVIDIA GBM backend (Wayland için)
+    GBM_BACKEND        = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+
+    # VA-API donanım video kodu çözme (Firefox, Chrome, Haruna vb.)
+    LIBVA_DRIVER_NAME  = "nvidia";
+    NVD_BACKEND        = "direct";
+
+    # Electron tabanlı uygulamaları (vscode, discord vb.) Wayland'de çalıştır
+    NIXOS_OZONE_WL     = "1";
+  };
+
+  # ── NVIDIA kernel modül parametreleri ────────────────────────────
+  boot.extraModprobeConfig = ''
+    # DRM kernel mode setting — Wayland için zorunlu
+    options nvidia-drm modeset=1 fbdev=1
+  '';
 }
