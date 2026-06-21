@@ -14,6 +14,7 @@
 
     ./modules/nvidia.nix
     ./modules/postgresql.nix
+    ./modules/mongodb.nix
     ./modules/starship.nix
     # ./modules/hyprland.nix
     ./modules/nix-parallel-downloads.nix
