@@ -1,4 +1,4 @@
-# /etc/nixos/modules/users.nix
+# nixos/modules/users.nix
 { config, pkgs, ... }:
 
 {
@@ -6,27 +6,25 @@
     ./aliases.nix
   ];
 
-  # Kullanıcı tanımları
+  # ── Kullanıcı tanımı ──────────────────────────────────────────────
   users.users.sentinel = {
     isNormalUser = true;
     description = "Sentinel";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
+    extraGroups = [
+      "networkmanager"  # Ağ yönetimi
+      "wheel"           # sudo erişimi
+      "libvirtd"        # virt-manager / KVM erişimi
+      "podman"          # Rootless podman erişimi
+      "dialout"         # Seri port (ARM gömülü programlama için)
+      "plugdev"         # USB cihaz erişimi (probe-rs, stlink için)
     ];
   };
 
-  # Zsh sadece temel özellikleri aktif etsin
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-  };
-
-  # Zoxide'ı NixOS seviyesinde böyle aktif ediyoruz:
-  programs.zoxide.enable = true;
-
-  # Git ve Sudo ayarları
+  # ── Yardımcı araçlar ──────────────────────────────────────────────
+  programs.zoxide.enable = true;  # Akıllı dizin geçmişi
   programs.git.enable = true;
+
+  # ── Güvenlik ──────────────────────────────────────────────────────
   security.sudo.wheelNeedsPassword = false;
 }

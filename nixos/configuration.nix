@@ -8,22 +8,21 @@
     ./modules/users.nix
     ./modules/desktop.nix
 
-    # geliştirme
-    ./modules/ide.nix
-    ./modules/languages.nix
+    # Geliştirme ortamı (diller, araçlar, IDE'ler, konteynerler)
+    ./modules/development.nix
     ./modules/programs.nix
 
     ./modules/nvidia.nix
     ./modules/postgresql.nix
     ./modules/starship.nix
     # ./modules/hyprland.nix
-     ./modules/nix-parallel-downloads.nix
+    ./modules/nix-parallel-downloads.nix
   ];
 
   ## Flake + Nix command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  ## Home Manager (DOĞRU YER)
+  ## Home Manager
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.sentinel = import ./modules/home.nix;
@@ -54,5 +53,6 @@
     syntaxHighlighting.enable = true;
   };
 
+  ## NixOS sürümü (tek yer burası)
   system.stateVersion = "25.11";
 }

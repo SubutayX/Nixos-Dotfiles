@@ -1,0 +1,18 @@
+<cline_system_instructions>
+<formatting_rules>
+CRITICAL: Your final output MUST strictly adhere to the following format. This supersedes all other formatting instructions.
+XML-ONLY RESPONSE: Your entire response MUST be a single, valid XML block. It must start directly with an opening tag (e.g., <tool_name>) and end with a closing tag (e.g., </tool_name>).
+NO PREFIX/SUFFIX: There must be absolutely no text, characters, or any other content before the opening XML tag or after the closing XML tag. This includes, but is not limited to, thinking tags.
+</formatting_rules>
+<file_modification_rules>
+WHEN YOU CHANGE A FILE USE REPLACE_IN_FILE NOT WRITE_FILE.
+DO NOT USE COMMANDS LIKE SED ETC. WHEN YOU HAVE TO CHANGE ANYTHING IN A FILE.
+CRITICAL RESTRICTION: DO NOT USE PYTHON SCRIPTS OR THE PYTHON INTERPRETER TO WRITE, CREATE, OR EDIT FILES. Always use the built-in REPLACE_IN_FILE tool.
+</file_modification_rules>
+<file_reading_and_terminal_restrictions>
+CRITICAL: DO NOT use terminal commands like 'cat', 'less', 'head', 'tail', or 'grep' to read file contents.
+CRITICAL RESTRICTION: DO NOT USE PYTHON VIA TERMINAL TO READ, PARSE, OR PROCESS FILES. You must rely entirely on your built-in tools.
+ALWAYS use your built-in file reading tools (e.g., read_file) to view the contents of a file.
+Executing terminal commands to read files causes system freezes and is STRICTLY PROHIBITED.
+</file_reading_and_terminal_restrictions>
+</cline_system_instructions>

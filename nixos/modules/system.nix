@@ -1,60 +1,32 @@
-# /etc/nixos/modules/system.nix
+# nixos/modules/system.nix
 { config, pkgs, ... }:
 
 {
-  # Bootloader.
-  boot.loader.systemd-boot.enable = false; #ture
+  # ── Önyükleyici (GRUB - UEFI) ─────────────────────────────────────
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
-#####
-  boot.loader.grub.enable = true;           # GRUB'u açıyoruz
-  boot.loader.grub.devices = [ "nodev" ];   # UEFI için gerekli
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.grub.configurationLimit = 5;
-####
-  # Ağ ayarları
+  boot.loader.grub = {
+    enable = true;
+    devices = [ "nodev" ];   # UEFI modu
+    efiSupport = true;
+    useOSProber = true;      # Diğer işletim sistemlerini otomatik tanı
+    configurationLimit = 5;  # GRUB menüsünde en fazla 5 giriş
+  };
+
+  # ── Ağ ────────────────────────────────────────────────────────────
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-
-
-
-# ----------------------------------------------
-  # SİSTEM YÖNETİMİ VE GENERASYON LİMİTİ
-  # ----------------------------------------------
-  
-  # system.systemBuilderCommands = ""; burası boş kalacak
-
-  # Generasyon temizliğini, izin sorunlarını önlemek için aktivasyon betiğinde yapıyoruz.
-  system.activationScripts.cleanup = ''
-    # Sistem profil generasyonlarını 5 ile sınırla (Sadece korunacak generasyon sayısını belirtiyoruz)
-    # --delete-generations, bu sayıdan daha büyük numaralara sahip generasyonları siler.
-    ${pkgs.nix}/bin/nix-env --delete-generations 5 --profile /nix/var/nix/profiles/system
-  '';
-  
-  # Boot Yöneticisi için limit koymak (Menüyü temiz tutar)
-  #boot.loader.systemd-boot.configurationLimit = 5; açılacak
-
-
-
-  # Saat Dilimi
+  # ── Saat Dilimi ───────────────────────────────────────────────────
   time.timeZone = "Europe/Istanbul";
 
-  # Yazıcı Servisleri
+  # ── Yazıcı Servisi ────────────────────────────────────────────────
   services.printing.enable = true;
 
-  # Genel Programlar
+  # ── Genel Programlar ──────────────────────────────────────────────
   programs.firefox.enable = true;
-  
-  # İzinler
-  nixpkgs.config.allowUnfree = true;
 
-  # Sistem genelindeki paketler
-  #environment.systemPackages = with pkgs; [
-  #  vscode
-    # zsh (Daha önce bahsettiğimiz gibi, programs.zsh.enable olduğu için bu satır gereksizdir, ancak şimdilik bırakıyorum. İleride temizleyebilirsiniz.)
-  #];
-  
-  # NixOS Sürümü
-  system.stateVersion = "25.11";
+  # ── Nixpkgs izinleri ──────────────────────────────────────────────
+  # allowUnfree tek yerden yönetiliyor (vscode, chrome, spotify vb. için şart)
+  nixpkgs.config.allowUnfree = true;
 }
